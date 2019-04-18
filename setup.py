@@ -15,14 +15,14 @@ from setuptools import find_packages, setup, Command
 NAME = 'beets-vtalbumartist'
 DESCRIPTION = "Beets plugin that provides a customizable flexible field/tag, vt_albumartist, which defaults to the track's albumartist."
 URL = 'https://github.com/rafaelp-dev/beets-vtalbumartist'
-EMAIL = 'rafap.dev@gmail.com'
+EMAIL = 'rafaelp.dev@gmail.com'
 AUTHOR = 'Rafael Parente'
 REQUIRES_PYTHON = '>=3.4.0'
 VERSION = '1.0.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-  beets,
+  'beets',
   # 'requests', 'maya', 'records',
 ]
 
@@ -83,6 +83,8 @@ class UploadCommand(Command):
     self.status('Building Source and Wheel (universal) distribution…')
     os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
 
+    os.system('twine check dist/*')
+
     self.status('Uploading the package to PyPI via Twine…')
     os.system('twine upload dist/*')
 
@@ -119,7 +121,6 @@ setup(
     # Trove classifiers
     # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     'Development Status :: 5 - Production/Stable',
-    'Environment :: Console',
     'Environment :: Plugins',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python',
