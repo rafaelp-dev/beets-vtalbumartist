@@ -14,11 +14,11 @@ from setuptools import find_packages, setup, Command
 # Package meta-data.
 NAME = 'beets-vtalbumartist'
 DESCRIPTION = "Beets plugin that provides a customizable flexible field/tag, vt_albumartist, which defaults to the track's albumartist."
-URL = 'https://github.com/rafaelp-dev/beets-vtalbumartist'
+URL = 'https://github.com/rafaelparente/beets-vtalbumartist'
 EMAIL = 'rafaelp.dev@gmail.com'
 AUTHOR = 'Rafael Parente'
 REQUIRES_PYTHON = '>=3.4.0'
-VERSION = '1.0.0'
+VERSION = '1.0.0.post1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [

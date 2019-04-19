@@ -20,7 +20,7 @@ To install it, use pip:
 
 or
 
-    git clone https://github.com/rafaelp-dev/beets-vtalbumartist.git
+    git clone https://github.com/rafaelparente/beets-vtalbumartist.git
     cd beets-vtalbumartist
     python setup.py install
 
