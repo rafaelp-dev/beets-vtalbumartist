@@ -41,5 +41,5 @@ class VTAlbumArtist(BeetsPlugin):
   def _before_write(self, item, path, tags):
     if item.album == self.album:
       item['vt_albumartist'] = self.artist
-    elif 'vt_album_artist' not in tags:
+    elif 'vt_albumartist' not in tags:
       item['vt_albumartist'] = item.albumartist
