@@ -7,7 +7,7 @@ class VTAlbumArtist(BeetsPlugin):
   def __init__(self):
     super(VTAlbumArtist, self).__init__()
     
-    self.is_edited = None
+    self.should_set = False
     self.albumartist = None
     
     self.register_listener('import_task_choice', self._import_after_apply)
@@ -23,25 +23,22 @@ class VTAlbumArtist(BeetsPlugin):
     
   def _import_after_apply(self, session, task):
     if task.choice_flag == action.APPLY:
+      albumartist = task.chosen_ident()[0]
+      
       ui.print_(u'Default Virtual Album Artist:')
-      if task.is_album:
-        ui.print_(u'    {}'.format(task.cur_artist))
-      else:
-        ui.print_(u'    {}'.format(task.item.albumartist))
+      ui.print_(u'    {}'.format(albumartist))
         
       sel = ui.input_options( (u'Accept as-is', u'Edit') )
       if sel == u'a':
-        self.is_edited = False
+        self.albumartist = albumartist
       elif sel == u'e':
         self.albumartist = ui.input_(u'Virtual Album Artist:').strip()
-        self.is_edited = True
       else:
         assert False
+      
+      self.should_set = True
   
   def _before_write(self, item, path, tags):
-    if self.is_edited:
+    if self.should_set:
       item['vt_albumartist'] = self.albumartist
       tags['vt_albumartist'] = self.albumartist
-    elif 'vt_albumartist' not in tags or 'vt_albumartist' not in item:
-      item['vt_albumartist'] = item.albumartist
-      tags['vt_albumartist'] = item.albumartist
