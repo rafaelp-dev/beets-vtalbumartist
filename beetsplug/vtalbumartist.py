@@ -42,6 +42,6 @@ class VTAlbumArtist(BeetsPlugin):
     if self.is_edited:
       item['vt_albumartist'] = self.artist
       tags['vt_albumartist'] = self.artist
-    elif 'vt_albumartist' not in tags:
+    elif 'vt_albumartist' not in tags or 'vt_albumartist' not in item:
       item['vt_albumartist'] = item.albumartist
       tags['vt_albumartist'] = item.albumartist
