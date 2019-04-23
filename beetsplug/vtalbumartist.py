@@ -8,7 +8,7 @@ class VTAlbumArtist(BeetsPlugin):
     super(VTAlbumArtist, self).__init__()
     
     self.is_edited = None
-    self.artist = None
+    self.albumartist = None
     
     self.register_listener('import_task_choice', self._import_after_apply)
     self.register_listener('write', self._before_write)
@@ -33,15 +33,15 @@ class VTAlbumArtist(BeetsPlugin):
       if sel == u'a':
         self.is_edited = False
       elif sel == u'e':
-        self.artist = ui.input_(u'Virtual Album Artist:').strip()
+        self.albumartist = ui.input_(u'Virtual Album Artist:').strip()
         self.is_edited = True
       else:
         assert False
   
   def _before_write(self, item, path, tags):
     if self.is_edited:
-      item['vt_albumartist'] = self.artist
-      tags['vt_albumartist'] = self.artist
+      item['vt_albumartist'] = self.albumartist
+      tags['vt_albumartist'] = self.albumartist
     elif 'vt_albumartist' not in tags or 'vt_albumartist' not in item:
       item['vt_albumartist'] = item.albumartist
       tags['vt_albumartist'] = item.albumartist
