@@ -23,7 +23,7 @@ class VTAlbumArtist(BeetsPlugin):
     
   def _import_after_apply(self, session, task):
     if task.choice_flag == action.APPLY:
-      ui.print_(u'Current Virtual Album Artist:')
+      ui.print_(u'Default Virtual Album Artist:')
       if task.is_album:
         ui.print_(u'    {}'.format(task.cur_artist))
       else:
