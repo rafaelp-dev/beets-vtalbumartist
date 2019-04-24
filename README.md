@@ -35,23 +35,44 @@ Enable the plugin in beets' config.yaml
 How to use it
 -------------
 
-It works as an extra import stage, after Apply-like actions,
+It works primarily as an extra import stage, after Apply-like actions,
 which allows the user to Edit the "Virtual Album Artist", saving
 this value under the field/tag "vt_albumartist". If not edited,
-its value will be the same as the album's artist field/tag.
+its value will be the same as the album's artist field/tag (default value)
+or some previously set value (current value).
 
-To change this field/tag for already imported tracks (but not set it),
-use the modify function on beets like it's explained here in the
+To set or change this field/tag for already imported tracks,
+a new command is provided: ``vtalbumartist``. To run it, just type
+``beet vtalbumartist QUERY`` where ``QUERY`` matches the tracks to be set.
+By default the command will match only albums (and its tracks) which have
+at least one track missing the vt_albumartist field/tag for that QUERY.
+Additional command-line options include:
+
+* ``--singletons`` or ``-s``: match singleton tracks instead of albums
+
+* ``-reset`` or ``-r``: match even those with field/tag already set
+
+* ``-quiet`` or ``-q``: never prompt for input: set field/tag automatically
+  It will try to set the field/tag to a current value, if any,
+  or else it will use the default value.
+
+It's compatible with built-in plugins that modify tags, like ``scrub``
+and ``mbsync``, as long as the field is still saved on the library.
+
+Therefore, if so needed, you can remove the tag from the files by first
+removing the field from the library. For that you can use the default
+modify function on beets like it's explained in the
 [Docs](https://beets.readthedocs.io/en/stable/reference/cli.html#modify).
 For example:
 
-    beet modify vt_albumartist='beastie men' artist:'beastie boys'
+    beet modify vt_albumartist! QUERY
 
-will change the tag for all tracks whose artist is "beastie boys".
+will remove the field for all tracks that match QUERY. Then, to remove
+the tag from the file, you can use the built-in plugin ``scrub``:
+[Scrub](https://beets.readthedocs.io/en/stable/plugins/scrub.html#manual-scrubbing).
+Like so:
 
-It's compatible with built-in plugins that modify tags, like
-``scrub`` and ``mbsync``. Currently, the only way to set this
-field/tag for already imported tracks is by using the plugin
-[scrub](https://beets.readthedocs.io/en/stable/plugins/scrub.html).
-By running it, tracks without this field/tag will be set
-with the default value (albumartist).
+    beet scrub QUERY
+    
+but be aware that it will also remove other tags on the file if
+they are not saved on the library's database.
